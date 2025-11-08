@@ -1,0 +1,242 @@
+﻿Ejercicios Script de linux
+-----------------------------------------------------------------
+Actividad I
+-----------------------------------------------------------------
+
+1. Hola Mundo
+#!/bin/bash
+
+echo "Hola Mundo"
+
+-----------------------------------------------------------------
+2. Mostrar el nombre del usuario actual
+#!/bin/bash
+
+echo "Usuario actual: $USER"
+
+-----------------------------------------------------------------
+3. Sumar dos numeros proporcionados por el usuario
+#!/bin/bash
+
+echo "INGRESA EL PRIMER NUMERO"
+read numero1
+echo "INGRESA EL SEGUNDO NUMERO"
+read numero2
+
+resultado=$((numero1 + numero2))
+echo "El resultado es: $resultado"
+
+-----------------------------------------------------------------
+4. Comprobar si un archivo existe
+#!/bin/bash
+
+# Pedir al usuario la ruta del archivo
+echo "Ingresa la ruta del archivo a verificar:"
+read ruta_archivo
+
+# Verificar si el archivo existe
+if [ -f "$ruta_archivo" ]; then
+    echo "El archivo '$ruta_archivo' EXISTE."
+else
+    echo "El archivo '$ruta_archivo' NO EXISTE."
+fi
+
+-----------------------------------------------------------------
+5. Mostrar el espacio en disco
+#!/bin/bash
+
+echo "=== ESPACIO EN DISCO ==="
+df -h | grep -E '/dev/sda'
+
+-----------------------------------------------------------------
+6. Crear un directorio con fecha actual
+#!/bin/bash
+
+echo "Se esta creando ..."
+
+fecha=$(date +"%Y-%m-%d")
+mkdir "$fecha"
+echo "Se creo el directorio: $fecha"
+
+-----------------------------------------------------------------
+7. Verificar si un numero es par o impar
+#!/bin/bash
+
+echo "ingresa un numero: "
+read numero
+
+# Calcular el resto de division entre 2
+resto=$((numero % 2))
+
+if (( resto == 0 )); then
+    echo "Es par"
+else
+    echo "Es impar"
+fi
+
+-----------------------------------------------------------------
+8. Contar el numero de lineas en un archivo
+#!/bin/bash
+
+echo "Ingresa la ruta del archivo:"
+read archivo
+
+lineas=$(wc -l < "$archivo")
+
+if [ -f "$archivo" ]; then
+    echo "El archivo tiene: $lineas lineas"
+else
+    echo "Error: El archivo no existe"
+fi
+
+-----------------------------------------------------------------
+9. Imprimir los numeros del 1 al 10
+#!/bin/bash
+
+echo "Ingresa un numero: "
+read numero
+for ((i=1; i<=$numero; i++)); do
+    echo "Numero: $i"
+done
+
+-----------------------------------------------------------------
+10. Saludar segun la hora del dia
+#!/bin/bash
+
+echo "Verificando la hora actual..."
+hora=$(date +"%H")
+
+if (( hora >= 5 && hora < 12 )); then
+    echo "Buenos dias"
+elif (( hora < 18 )); then
+    echo "Buenas tardes"
+else
+    echo "Buenas noches"
+fi
+
+-----------------------------------------------------------------
+11. Crear multiples archivos con un bucle
+#!/bin/bash
+
+echo "Cuantos archivos quieres crear: "
+read crear_archivos
+
+for ((i=1; i<=$crear_archivos; i++)); do
+    archivo="file$i.txt"
+    echo "Creando: $archivo"
+    touch $archivo
+done
+
+echo "Archivos creados correctamente"
+
+-----------------------------------------------------------------
+12. Verificar si un proceso esta en ejecucion
+#!/bin/bash
+
+echo "Ingresa el nombre del proceso a verificar:"
+read proceso
+
+if pgrep "$proceso" > /dev/null; then
+    echo "El proceso '$proceso' esta en ejecucion."
+    echo "PID(s): $(pgrep "$proceso" | tr '\n' ' ')"
+else
+    echo "El proceso '$proceso' NO esta en ejecucion."
+fi
+
+-----------------------------------------------------------------
+13. Comparar dos numeros
+#!/bin/bash
+
+echo "ingresa primer numero = "
+read numero1
+
+echo "ingresa segundo numero = "
+read numero2
+
+if [ $numero1 -gt $numero2 ]; then
+    echo "$numero1 es mayor"
+elif [ $numero1 -lt $numero2 ]; then
+    echo "$numero2 es mayor"
+elif [ $numero1 -eq $numero2 ]; then
+    echo "$numero1 y $numero2 son iguales"
+fi
+
+-----------------------------------------------------------------
+14. Calcular factorial de un numero
+#!/bin/bash
+
+echo "Ingresa un numero para calcular su factorial:"
+read numero
+
+factorial=1
+for ((i=1; i<=5; i++)); do
+    factorial=$((factorial * i))
+done
+
+echo "El factorial de $numero es: $factorial"
+
+-----------------------------------------------------------------
+15. Convertir texto a minusculas
+#!/bin/bash
+
+echo "Ingrese el texto a convertir: "
+read texto
+
+minusculas="${texto,,}"
+echo "El texto convertido en minusculas es: $minusculas"
+
+-----------------------------------------------------------------
+16. Copiar un archivo con confirmacion
+#!/bin/bash
+
+echo "Ingrese ruta del archivo a copiar (origen)"
+read origen
+
+echo "Ingrese ruta donde copiar el archivo (destino)"
+read destino
+
+if cp "$origen" "$destino"; then
+    echo "Copia exitosa"
+else
+    echo "Error al copiar"
+fi
+
+-----------------------------------------------------------------
+17. Monitorear uso de CPU cada 5 segundos
+#!/bin/bash
+
+echo "Iniciando monitoreo de CPU cada 5 segundos..."
+echo "Presiona Ctrl + C para detener"
+echo "============================="
+
+while true; do
+    timestamp=$(date +"%H:%M:%S")
+    cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}')
+    echo "[$timestamp] Uso de CPU: $cpu_usage%"
+    sleep 5
+done
+
+-----------------------------------------------------------------
+18. Generar numeros aleatorios
+#!/bin/bash
+
+echo "Numero aleatorio: $RANDOM"
+
+-----------------------------------------------------------------
+19. Borrar archivos antiguos en un directorio
+#!/bin/bash
+
+echo "Directorio a limpiar:"
+read ruta
+echo "Archivos mas antiguos de (minutos):"
+read minutos
+
+find "$ruta" -type f -mmin "+$minutos" -delete
+echo "Archivos borrados"
+
+-----------------------------------------------------------------
+20. Listar usuarios conectados al sistema
+#!/bin/bash
+
+echo "Usuarios:" && users
+echo "Detalles:" && w -h
